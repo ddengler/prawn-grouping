@@ -1,6 +1,8 @@
 # Prawn::Grouping
 
-TODO: Write a gem description
+[![Build Status](https://travis-ci.org/ddengler/prawn-grouping.png?branch=master)](https://travis-ci.org/ddengler/prawn-grouping)
+
+Gem to allow grouping with prawn >= 1.0
 
 ## Installation
 
