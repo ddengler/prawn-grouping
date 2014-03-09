@@ -1,5 +1,6 @@
 # Prawn::Grouping
 
+[![Gem Version](https://badge.fury.io/rb/prawn-grouping.png)](http://badge.fury.io/rb/prawn-grouping)
 [![Build Status](https://travis-ci.org/ddengler/prawn-grouping.png?branch=master)](https://travis-ci.org/ddengler/prawn-grouping)
 [![Code Climate](https://codeclimate.com/github/ddengler/prawn-grouping.png)](https://codeclimate.com/github/ddengler/prawn-grouping)
 
