@@ -69,6 +69,19 @@ end
 The example above starts a new page if the content is too tall for a single page. Default behavior would be to just append the content.
 
 
+## Troubleshooting
+
+When using JRuby a block parameter has to be supplied. For the other tested Interpreters this is optional.
+
+```ruby
+Prawn::Document.new do
+  5.times { text "Regular text" }
+
+  group do |g|
+    15.times { g.text "Paragraphs not separated unless neccessary" }
+  end
+end
+```
 
 ## Contributing
 
