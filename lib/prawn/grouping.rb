@@ -24,27 +24,27 @@ module Prawn
       # create a temporary document with current context and offset
       pdf = create_box_clone
       pdf.y = y
-      pdf.instance_eval &b
+      pdf.instance_exec pdf, &b
 
       if pdf.page_count > 1
         # create a temporary document without offset
         pdf = create_box_clone
-        pdf.instance_eval &b
+        pdf.instance_exec pdf, &b
 
         if pdf.page_count > 1
           # does not fit new context
           too_tall.call if too_tall
-          b.call
+          b.call(self)
         else
           fits_new_context.call if fits_new_context
           bounds.move_past_bottom
-          b.call
+          b.call(self)
         end
         return false
       else
         # just render it
         fits_current_context.call if fits_current_context
-        b.call
+        b.call(self)
         return true
       end
     end

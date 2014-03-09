@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version                   = Prawn::Grouping::VERSION
   spec.authors                   = ["Daniel Dengler"]
   spec.email                     = ["me@ddengler.com"]
-  spec.summary                   = "Groping extension for prawn pdf generator"
+  spec.summary                   = "Grouping extension for prawn pdf generator"
   spec.homepage                  = ""
   spec.license                   = "MIT"
   spec.platform                  = Gem::Platform::RUBY
