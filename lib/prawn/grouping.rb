@@ -58,6 +58,7 @@ module Prawn
         pdf.font_families.update font_families
         pdf.font font.name
         pdf.font_size font_size
+        pdf.default_leading = default_leading
       end
     end
   end
