@@ -6,10 +6,10 @@ describe "Prawn::Grouping" do
     val = pdf.group do |pdf| 
       pdf.text "FooBar"
     end
-    (!!val).should == true
+    expect(!!val).to eq(true)
 
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
-    pages.size.should == 1
+    expect(pages.size).to eq(1)
   end
 
   it "calls callbacks according to content length" do
@@ -46,7 +46,7 @@ describe "Prawn::Grouping" do
       end
     end
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
-    pages.size.should == 2
+    expect(pages.size).to eq(2)
   end
 
   # the following example were copied to fit the original spec from
@@ -63,9 +63,9 @@ describe "Prawn::Grouping" do
       (!!val).should == false
     end
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
-    pages.size.should == 2
-    pages[0][:strings].should == []
-    pages[1][:strings].should == ["Hello", "World"]
+    expect(pages.size).to eq(2)
+    expect(pages[0][:strings]).to eq([])
+    expect(pages[1][:strings]).to eq(["Hello", "World"])
   end
 
   
@@ -84,7 +84,7 @@ describe "Prawn::Grouping" do
 
     # Second page should start with a 0 because it's a new group.
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
-    pages.size.should == 2
-    pages[1][:strings].first.should == '0'
+    expect(pages.size).to eq(2)
+    expect(pages[1][:strings].first).to eq('0')
   end
 end
