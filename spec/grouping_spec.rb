@@ -14,21 +14,21 @@ describe "Prawn::Grouping" do
 
   it "calls callbacks according to content length" do
     called = 0
-    pdf = Prawn::Document.new do
-      group :fits_current_context => lambda { called = 1 } do |pdf|
+    pdf = Prawn::Document.new do |pdf|
+      pdf.group :fits_current_context => lambda { called = 1 } do |pdf|
         20.times { pdf.text "FooBar 1" }
       end
-      called.should == 1
+      expect(called).to eq(1)
 
-      group :fits_new_context => lambda { called = 2 } do |pdf|
+      pdf.group :fits_new_context => lambda { called = 2 } do |pdf|
         40.times { pdf.text "FooBar 2" }
       end
-      called.should == 2
+      expect(called).to eq(2)
 
-      group :too_tall => lambda { called = 3 } do |pdf|
+      pdf.group :too_tall => lambda { called = 3 } do |pdf|
         100.times { pdf.text "FooBar 3" }
       end
-      called.should == 3
+      expect(called).to eq(3)
     end
   end
 
@@ -52,15 +52,15 @@ describe "Prawn::Grouping" do
   # the following example were copied to fit the original spec from
   # https://github.com/prawnpdf/prawn/blob/master/spec/document_spec.rb
   it "should group a simple block on a single page" do
-    pdf = Prawn::Document.new do
-      self.y = 50
-      val = group do |pdf|
+    pdf = Prawn::Document.new do |pdf|
+      pdf.y = 50
+      val = pdf.group do |pdf|
         pdf.text "Hello"
         pdf.text "World"
       end
 
       # group should return a false value since a new page was started
-      (!!val).should == false
+      expect(!!val).to eq(false)
     end
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
     expect(pages.size).to eq(2)
