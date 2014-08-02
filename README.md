@@ -72,7 +72,7 @@ The example above starts a new page if the content is too tall for a single page
 
 ## Troubleshooting
 
-When using JRuby a block parameter has to be supplied. For the other tested Interpreters this is optional.
+#### When using JRuby a block parameter has to be supplied. For the other tested Interpreters this is optional.
 
 ```ruby
 Prawn::Document.new do
@@ -83,6 +83,10 @@ Prawn::Document.new do
   end
 end
 ```
+
+#### Manipulating objects within the group block
+
+The grouping internally works by executing the block one or _multiple_ times and checking the results, because deep copy did not work well for the original implementation in many cases. As a result you should not manipulate your data objects within the block. See issue #7 for details.
 
 ## Contributing
 
