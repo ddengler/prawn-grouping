@@ -3,9 +3,9 @@ require "prawn/grouping/version"
 
 module Prawn
   module Grouping
-    
+
     # Groups a given block vertiacally within the current context, if possible.
-    # 
+    #
     # Parameters are:
     #
     # <tt>options</tt>:: A hash for grouping options.
@@ -17,6 +17,7 @@ module Prawn
     #                                      rendered and does fit context.
     #
     def group(options = {}, &b)
+      y_offset             = options.fetch(:y_offset, 0)
       too_tall             = options[:too_tall]
       fits_new_context     = options[:fits_new_context]
       fits_current_context = options[:fits_current_context]
@@ -26,12 +27,12 @@ module Prawn
       pdf.y = y
       pdf.instance_exec pdf, &b
 
-      if pdf.page_count > 1
+      if pdf.page_count > 1 || pdf.y < y_offset
         # create a temporary document without offset
         pdf = create_box_clone
         pdf.instance_exec pdf, &b
 
-        if pdf.page_count > 1
+        if pdf.page_count > 1 || pdf.y < y_offset
           # does not fit new context
           too_tall.call if too_tall
           b.call(self)
