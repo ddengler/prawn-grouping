@@ -3,9 +3,9 @@ require "prawn/grouping/version"
 
 module Prawn
   module Grouping
-    
+
     # Groups a given block vertiacally within the current context, if possible.
-    # 
+    #
     # Parameters are:
     #
     # <tt>options</tt>:: A hash for grouping options.
@@ -56,7 +56,7 @@ module Prawn
         pdf.margin_box = @bounding_box.dup
         pdf.text_formatter = @text_formatter.dup
         pdf.font_families.update font_families
-        pdf.font font.name
+        pdf.font font.family
         pdf.font_size font_size
         pdf.default_leading = default_leading
       end
