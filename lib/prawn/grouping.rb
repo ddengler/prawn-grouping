@@ -79,8 +79,13 @@ module Prawn
     private
 
     def create_box_clone(y = :keep)
-      Prawn::Document.new(:page_size => state.page.size, :page_layout => state.page.layout) do |pdf|
-        pdf.margin_box = @bounding_box.dup
+      Prawn::Document.new(
+        page_size: state.page.size, page_layout: state.page.layout,
+        left_margin: bounds.absolute_left,
+        top_margin: state.page.dimensions[-1] - bounds.absolute_top,
+        right_margin: state.page.dimensions[-2] - bounds.absolute_right,
+        bottom_margin: state.page.margins[:bottom]
+      ) do |pdf|
         pdf.text_formatter = @text_formatter.dup
         pdf.font_families.update font_families
         pdf.font font.family
