@@ -22,8 +22,7 @@ module Prawn
       fits_current_context = options[:fits_current_context]
 
       # create a temporary document with current context and offset
-      pdf = create_box_clone
-      pdf.y = y
+      pdf = create_box_clone(y)
       pdf.check_group_overflow(&b)
 
       if pdf.page_count > 1
@@ -79,7 +78,7 @@ module Prawn
 
     private
 
-    def create_box_clone
+    def create_box_clone(y = :keep)
       Prawn::Document.new(:page_size => state.page.size, :page_layout => state.page.layout) do |pdf|
         pdf.margin_box = @bounding_box.dup
         pdf.text_formatter = @text_formatter.dup
@@ -87,6 +86,9 @@ module Prawn
         pdf.font font.family
         pdf.font_size font_size
         pdf.default_leading = default_leading
+        unless y == :keep
+          pdf.y = y
+        end
       end
     end
   end
