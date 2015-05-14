@@ -33,18 +33,36 @@ module Prawn
 
         if pdf.page_count > 1
           # does not fit new context
-          too_tall.call if too_tall
-          b.call(self)
+          if too_tall
+            if too_tall.arity < 1
+              instance_exec(&too_tall)
+            else
+              too_tall.call(self)
+            end
+          end
+          yield self
         else
-          fits_new_context.call if fits_new_context
+          if fits_new_context
+            if fits_new_context.arity < 1
+              instance_exec(&fits_new_context)
+            else
+              fits_new_context.call(self)
+            end
+          end
           bounds.move_past_bottom
-          b.call(self)
+          yield self
         end
         return false
       else
         # just render it
-        fits_current_context.call if fits_current_context
-        b.call(self)
+        if fits_current_context
+          if fits_current_context.arity < 1
+            instance_exec(&fits_current_context)
+          else
+            fits_current_context.call(self)
+          end
+        end
+        yield self
         return true
       end
     end
