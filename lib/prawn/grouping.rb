@@ -24,12 +24,12 @@ module Prawn
       # create a temporary document with current context and offset
       pdf = create_box_clone
       pdf.y = y
-      pdf.instance_exec pdf, &b
+      pdf.check_group_overflow(&b)
 
       if pdf.page_count > 1
         # create a temporary document without offset
         pdf = create_box_clone
-        pdf.instance_exec pdf, &b
+        pdf.check_group_overflow(&b)
 
         if pdf.page_count > 1
           # does not fit new context
@@ -64,6 +64,16 @@ module Prawn
         end
         yield self
         return true
+      end
+    end
+
+    protected
+
+    def check_group_overflow(&block)
+      if block.arity < 1
+        instance_exec(&block)
+      else
+        block.call(self)
       end
     end
 
