@@ -23,30 +23,22 @@ module Prawn
 
       # create a temporary document with current context and offset
       pdf = create_box_clone(y)
-      pdf.check_group_overflow(&b)
+      pdf.exec(&b)
 
       if pdf.page_count > 1
         # create a temporary document without offset
         pdf = create_box_clone
-        pdf.check_group_overflow(&b)
+        pdf.exec(&b)
 
         if pdf.page_count > 1
           # does not fit new context
           if too_tall
-            if too_tall.arity < 1
-              instance_exec(&too_tall)
-            else
-              too_tall.call(self)
-            end
+            exec(&too_tall)
           end
           yield self
         else
           if fits_new_context
-            if fits_new_context.arity < 1
-              instance_exec(&fits_new_context)
-            else
-              fits_new_context.call(self)
-            end
+            exec(&fits_new_context)
           end
           bounds.move_past_bottom
           yield self
@@ -55,11 +47,7 @@ module Prawn
       else
         # just render it
         if fits_current_context
-          if fits_current_context.arity < 1
-            instance_exec(&fits_current_context)
-          else
-            fits_current_context.call(self)
-          end
+          exec(&fits_current_context)
         end
         yield self
         return true
@@ -68,7 +56,7 @@ module Prawn
 
     protected
 
-    def check_group_overflow(&block)
+    def exec(&block)
       if block.arity < 1
         instance_exec(&block)
       else
