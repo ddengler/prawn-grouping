@@ -43,14 +43,14 @@ module Prawn
           bounds.move_past_bottom
           yield self
         end
-        return false
+        false
       else
         # just render it
         if fits_current_context
           exec(&fits_current_context)
         end
         yield self
-        return true
+        true
       end
     end
 
