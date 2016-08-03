@@ -1,7 +1,7 @@
 # coding: utf-8
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'prawn/grouping/version'
+require "prawn/grouping/version"
 
 Gem::Specification.new do |spec|
   spec.name                      = "prawn-grouping"
@@ -14,9 +14,9 @@ Gem::Specification.new do |spec|
   spec.platform                  = Gem::Platform::RUBY
 
   spec.files                     = `git ls-files -z`.split("\x0")
-  spec.test_files                = Dir[ "spec/*_spec.rb" ]
+  spec.test_files                = Dir["spec/*_spec.rb"]
   spec.require_path              = "lib"
-  spec.required_ruby_version     = '>= 2.1.0'
+  spec.required_ruby_version     = ">= 2.1.0"
   spec.required_rubygems_version = ">= 2.0.0"
 
   spec.add_dependency "prawn", ">= 1.0.0"

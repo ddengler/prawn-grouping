@@ -3,7 +3,6 @@ require "prawn/grouping/version"
 
 module Prawn
   module Grouping
-
     # Groups a given block vertiacally within the current context, if possible.
     #
     # Parameters are:
@@ -52,7 +51,7 @@ module Prawn
     private
 
     def create_box_clone
-      Prawn::Document.new(:page_size => state.page.size, :page_layout => state.page.layout) do |pdf|
+      Prawn::Document.new(page_size: state.page.size, page_layout: state.page.layout) do |pdf|
         pdf.margin_box = @bounding_box.dup
         pdf.text_formatter = @text_formatter.dup
         pdf.font_families.update font_families

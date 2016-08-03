@@ -15,17 +15,17 @@ describe "Prawn::Grouping" do
   it "calls callbacks according to content length" do
     called = 0
     pdf = Prawn::Document.new do |pdf|
-      pdf.group :fits_current_context => lambda { called = 1 } do |pdf|
+      pdf.group fits_current_context: -> { called = 1 } do |pdf|
         20.times { pdf.text "FooBar 1" }
       end
       expect(called).to eq(1)
 
-      pdf.group :fits_new_context => lambda { called = 2 } do |pdf|
+      pdf.group fits_new_context: -> { called = 2 } do |pdf|
         40.times { pdf.text "FooBar 2" }
       end
       expect(called).to eq(2)
 
-      pdf.group :too_tall => lambda { called = 3 } do |pdf|
+      pdf.group too_tall: -> { called = 3 } do |pdf|
         100.times { pdf.text "FooBar 3" }
       end
       expect(called).to eq(3)
@@ -65,17 +65,15 @@ describe "Prawn::Grouping" do
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
     expect(pages.size).to eq(2)
     expect(pages[0][:strings]).to eq([])
-    expect(pages[1][:strings]).to eq(["Hello", "World"])
+    expect(pages[1][:strings]).to eq(%w(Hello World))
   end
-
-
 
   it "should group within individual column boxes" do
     pdf = Prawn::Document.new do
       # Set up columns with grouped blocks of 0..49. 0 to 49 is slightly short
       # of the height of one page / column, so each column should get its own
       # group (every column should start with zero).
-      column_box([0, bounds.top], :width => bounds.width, :columns => 7) do
+      column_box([0, bounds.top], width: bounds.width, columns: 7) do
         10.times do
           group { |pdf| 50.times { |i| pdf.text(i.to_s) } }
         end
@@ -85,7 +83,7 @@ describe "Prawn::Grouping" do
     # Second page should start with a 0 because it's a new group.
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
     expect(pages.size).to eq(2)
-    expect(pages[1][:strings].first).to eq('0')
+    expect(pages[1][:strings].first).to eq("0")
   end
 
   it "should allow the use of inline formatting" do
@@ -101,8 +99,8 @@ describe "Prawn::Grouping" do
     # Second page should start with a 0 because it's a new group.
     pages = PDF::Inspector::Page.analyze(pdf.render).pages
     expect(pages.size).to eq(1)
-    expect(pages[0][:strings].first).to eq('0')
+    expect(pages[0][:strings].first).to eq("0")
 
-    pdf.render_file 'test.pdf'
+    pdf.render_file "test.pdf"
   end
 end
