@@ -16,8 +16,8 @@ Gem::Specification.new do |spec|
   spec.files                     = `git ls-files -z`.split("\x0")
   spec.test_files                = Dir[ "spec/*_spec.rb" ]
   spec.require_path              = "lib"
-  spec.required_ruby_version     = '>= 1.9.3'
-  spec.required_rubygems_version = ">= 1.3.6"
+  spec.required_ruby_version     = '>= 2.1.0'
+  spec.required_rubygems_version = ">= 2.0.0"
 
   spec.add_dependency "prawn", ">= 1.0.0"
 

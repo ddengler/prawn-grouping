@@ -3,7 +3,7 @@ require File.join(File.expand_path(File.dirname(__FILE__)), "spec_helper")
 describe "Prawn::Grouping" do
   it "returns true if the content fits in the current context" do
     pdf = Prawn::Document.new
-    val = pdf.group do |pdf| 
+    val = pdf.group do |pdf|
       pdf.text "FooBar"
     end
     expect(!!val).to eq(true)
@@ -68,7 +68,7 @@ describe "Prawn::Grouping" do
     expect(pages[1][:strings]).to eq(["Hello", "World"])
   end
 
-  
+
 
   it "should group within individual column boxes" do
     pdf = Prawn::Document.new do
@@ -89,23 +89,20 @@ describe "Prawn::Grouping" do
   end
 
   it "should allow the use of inline formatting" do
-    # TODO: make this work on 1.9.3
-    if RUBY_VERSION != '1.9.3'
-      pdf = Prawn::Document.new do
-        # Set up columns with grouped blocks of 0..49. 0 to 49 is slightly short
-        # of the height of one page / column, so each column should get its own
-        # group (every column should start with zero).
-        group do |pdf|
-          10.times { |i| pdf.text("<b>#{i}</b>", inline_format: true) }
-        end
+    pdf = Prawn::Document.new do
+      # Set up columns with grouped blocks of 0..49. 0 to 49 is slightly short
+      # of the height of one page / column, so each column should get its own
+      # group (every column should start with zero).
+      group do |pdf|
+        10.times { |i| pdf.text("<b>#{i}</b>", inline_format: true) }
       end
-
-      # Second page should start with a 0 because it's a new group.
-      pages = PDF::Inspector::Page.analyze(pdf.render).pages
-      expect(pages.size).to eq(1)
-      expect(pages[0][:strings].first).to eq('0')
-
-      pdf.render_file 'test.pdf'
     end
+
+    # Second page should start with a 0 because it's a new group.
+    pages = PDF::Inspector::Page.analyze(pdf.render).pages
+    expect(pages.size).to eq(1)
+    expect(pages[0][:strings].first).to eq('0')
+
+    pdf.render_file 'test.pdf'
   end
 end
