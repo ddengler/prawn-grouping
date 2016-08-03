@@ -8,3 +8,8 @@ rvm:
 gemfile:
   - gemfiles/prawn_1.gemfile
   - gemfiles/prawn_2.gemfile
+
+matrix:
+  exclude:
+  - rvm: 2.1.10
+    gemfile: gemfiles/prawn_2.gemfile
