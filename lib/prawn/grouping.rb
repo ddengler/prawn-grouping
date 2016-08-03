@@ -22,43 +22,66 @@ module Prawn
       fits_current_context = options[:fits_current_context]
 
       # create a temporary document with current context and offset
-      pdf = create_box_clone
-      pdf.y = y
-      pdf.instance_exec pdf, &b
+      pdf = create_box_clone(y)
+      pdf.exec(&b)
 
       if pdf.page_count > 1
         # create a temporary document without offset
         pdf = create_box_clone
-        pdf.instance_exec pdf, &b
+        pdf.exec(&b)
 
         if pdf.page_count > 1
           # does not fit new context
-          too_tall.call if too_tall
-          b.call(self)
+          if too_tall
+            exec(&too_tall)
+          end
+          yield self
         else
-          fits_new_context.call if fits_new_context
+          if fits_new_context
+            exec(&fits_new_context)
+          end
           bounds.move_past_bottom
-          b.call(self)
+          yield self
         end
-        return false
+        false
       else
         # just render it
-        fits_current_context.call if fits_current_context
-        b.call(self)
-        return true
+        if fits_current_context
+          exec(&fits_current_context)
+        end
+        yield self
+        true
+      end
+    end
+
+    protected
+
+    def exec(&block)
+      if block.arity < 1
+        instance_exec(&block)
+      else
+        block.call(self)
       end
     end
 
     private
 
-    def create_box_clone
-      Prawn::Document.new(:page_size => state.page.size, :page_layout => state.page.layout) do |pdf|
-        pdf.margin_box = @bounding_box.dup
+    def create_box_clone(y = :keep)
+      Prawn::Document.new(
+        page_size: state.page.size, page_layout: state.page.layout,
+        left_margin: bounds.absolute_left,
+        top_margin: state.page.dimensions[-1] - bounds.absolute_top,
+        right_margin: state.page.dimensions[-2] - bounds.absolute_right,
+        bottom_margin: state.page.margins[:bottom]
+      ) do |pdf|
         pdf.text_formatter = @text_formatter.dup
         pdf.font_families.update font_families
         pdf.font font.family
         pdf.font_size font_size
         pdf.default_leading = default_leading
+        unless y == :keep
+          pdf.y = y
+        end
       end
     end
   end
