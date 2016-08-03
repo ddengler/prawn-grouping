@@ -26,7 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0.0"
   spec.add_development_dependency "pdf-inspector", "~> 1.1.0"
   spec.add_development_dependency "pdf-reader", "~>1.2"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "growl"
 end
