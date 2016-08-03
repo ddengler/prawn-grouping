@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
 
-gemspec
+gemspec :path => '/prawn-grouping.gemspec'
 
 gem "prawn", "~> 1.0"
