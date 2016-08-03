@@ -19,3 +19,6 @@ tmp
 /bin/
 
 /.DS_Store
+/gemfiles/prawn_2.gemfile.lock
+/gemfiles/prawn_1.gemfile.lock
+/test.pdf
