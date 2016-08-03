@@ -27,8 +27,8 @@ Or install it yourself as:
 ```ruby
 Prawn::Document.new do
   20.times { text "Regular text" }
-  group do
-    20.times { text "Paragraphs not separated unless neccessary" }
+  group do |g|
+    20.times { g.text "Paragraphs not separated unless neccessary" }
   end
 end
 ```
@@ -38,10 +38,10 @@ end
 ```ruby
 Prawn::Document.new do
   5.times { text "Regular text" }
-  group do
-    15.times { text "Paragraphs not separated unless neccessary" }
-    group do
-      30.times { text "Subparagraphs not separated unless neccessary" }
+  group do |g|
+    15.times { g.text "Paragraphs not separated unless neccessary" }
+    group do |g|
+      30.times { g.text "Subparagraphs not separated unless neccessary" }
     end
   end
 end
@@ -61,8 +61,8 @@ Currently three callbacks are supported:
 Prawn::Document.new do
   5.times { text "Regular text" }
 
-  group :too_tall => lambda { start_new_page } do
-    15.times { text "Paragraphs not separated unless neccessary" }
+  group :too_tall => lambda { start_new_page } do |g|
+    15.times { g.text "Paragraphs not separated unless neccessary" }
   end
 end
 ```
@@ -72,7 +72,7 @@ The example above starts a new page if the content is too tall for a single page
 
 ## Troubleshooting
 
-#### When using JRuby a block parameter has to be supplied. For the other tested Interpreters this is optional.
+#### When using JRuby on a version smaller than 0.2.0 a block parameter has to be supplied. For the other tested Interpreters this was optional.
 
 ```ruby
 Prawn::Document.new do

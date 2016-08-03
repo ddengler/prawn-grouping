@@ -16,7 +16,7 @@ module Prawn
     #     <tt>:fits_current_context</tt>:: A proc called before the content is
     #                                      rendered and does fit context.
     #
-    def group(options = {}, &b)
+    def group(options = {})
       too_tall             = options[:too_tall]
       fits_new_context     = options[:fits_new_context]
       fits_current_context = options[:fits_current_context]
@@ -24,27 +24,27 @@ module Prawn
       # create a temporary document with current context and offset
       pdf = create_box_clone
       pdf.y = y
-      pdf.instance_exec pdf, &b
+      yield pdf
 
       if pdf.page_count > 1
         # create a temporary document without offset
         pdf = create_box_clone
-        pdf.instance_exec pdf, &b
+        yield pdf
 
         if pdf.page_count > 1
           # does not fit new context
           too_tall.call if too_tall
-          b.call(self)
+          yield self
         else
           fits_new_context.call if fits_new_context
           bounds.move_past_bottom
-          b.call(self)
+          yield self
         end
         return false
       else
         # just render it
         fits_current_context.call if fits_current_context
-        b.call(self)
+        yield self
         return true
       end
     end
