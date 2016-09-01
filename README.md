@@ -28,7 +28,7 @@ Or install it yourself as:
 Prawn::Document.new do
   20.times { text "Regular text" }
   group do |g|
-    20.times { g.text "Paragraphs not separated unless neccessary" }
+    20.times { g.text "Paragraphs not separated unless necessary" }
   end
 end
 ```
@@ -39,9 +39,9 @@ end
 Prawn::Document.new do
   5.times { text "Regular text" }
   group do |g|
-    15.times { g.text "Paragraphs not separated unless neccessary" }
+    15.times { g.text "Paragraphs not separated unless necessary" }
     group do |g|
-      30.times { g.text "Subparagraphs not separated unless neccessary" }
+      30.times { g.text "Subparagraphs not separated unless necessary" }
     end
   end
 end
@@ -62,7 +62,7 @@ Prawn::Document.new do
   5.times { text "Regular text" }
 
   group :too_tall => lambda { start_new_page } do |g|
-    15.times { g.text "Paragraphs not separated unless neccessary" }
+    15.times { g.text "Paragraphs not separated unless necessary" }
   end
 end
 ```
@@ -79,7 +79,7 @@ Prawn::Document.new do
   5.times { text "Regular text" }
 
   group do |g|
-    15.times { g.text "Paragraphs not separated unless neccessary" }
+    15.times { g.text "Paragraphs not separated unless necessary" }
   end
 end
 ```
