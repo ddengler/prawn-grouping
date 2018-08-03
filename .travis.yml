@@ -1,10 +1,10 @@
 language: ruby
 rvm:
-  - 2.1.10
-  - 2.2.5
-  - 2.3.1
-  - jruby-9.0.5.0
+  - 2.3.7
+  - 2.4.4
+  - 2.5.1
+  - jruby-9.2.0.0
 
 gemfile:
-  - gemfiles/prawn_1.gemfile
-  - gemfiles/prawn_2.gemfile
+  - gemfiles/prawn_2_1.gemfile
+  - gemfiles/prawn_2_2.gemfile
