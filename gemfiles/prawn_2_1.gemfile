@@ -2,4 +2,4 @@ source 'https://rubygems.org'
 
 gemspec :path => '../'
 
-gem "prawn", "~> 1.0"
+gem "prawn", "~> 2.1.0"
