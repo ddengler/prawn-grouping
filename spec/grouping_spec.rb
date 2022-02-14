@@ -105,4 +105,19 @@ describe "Prawn::Grouping" do
 
     pdf.render_file 'test.pdf'
   end
+
+  it "should clone page margins from the original document" do
+    outer_margins = nil
+    inner_margins = nil
+
+    Prawn::Document.new(margin: [0, 1, 2, 3]) do
+      outer_margins = page.margins
+      group do |pdf|
+        inner_margins ||= pdf.page.margins
+      end
+    end
+
+    expect(outer_margins).to_not be(inner_margins)
+    expect(outer_margins).to eq(inner_margins)
+  end
 end

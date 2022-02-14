@@ -55,6 +55,7 @@ module Prawn
       Prawn::Document.new(:page_size => state.page.size, :page_layout => state.page.layout) do |pdf|
         pdf.margin_box = @bounding_box.dup
         pdf.text_formatter = @text_formatter.dup
+        pdf.page.margins = page.margins.dup
         pdf.font_families.update font_families
         pdf.font font.family
         pdf.font_size font_size
