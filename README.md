@@ -90,7 +90,7 @@ Prawn::Document.new do |pdf|
         40.times { group_pdf.text "222" }
     end
 end
-```ruby
+```
 
 ## Contributing
 
