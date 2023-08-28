@@ -76,6 +76,22 @@ The example above starts a new page if the content is too tall for a single page
 
 The grouping internally works by executing the block one or _multiple_ times and checking the results, because deep copy did not work well for the original implementation in many cases. As a result you should not manipulate your data objects within the block. See issue #7 for details.
 
+#### Elements render twice
+
+This probably happens because you reference the original document within your group by using pdf.text in the curly braces. The following should also work:
+
+```ruby
+Prawn::Document.new do |pdf|
+    pdf.group do |group_pdf|
+        40.times { group_pdf.text "1111" }
+    end
+
+    pdf.group do  |group_pdf|
+        40.times { group_pdf.text "222" }
+    end
+end
+```
+
 ## Contributing
 
 1. Fork it ( http://github.com/<my-github-username>/prawn-grouping/fork )
